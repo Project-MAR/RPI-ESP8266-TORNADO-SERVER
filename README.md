@@ -15,4 +15,4 @@ After setup is complete, Run [test-Server.py](https://github.com/Project-MAR/RPI
 ---
 #### Web Socket Client Setup on NodeMCU
 
-Start with [This project](https://github.com/Links2004/arduinoWebSockets), I can create NodeMCU Web Socket Client. Download and run [test-Client.ino](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/test-Client.ino) then enjoy with basic Web Socket Communication.
+Start with [This project](https://github.com/Links2004/arduinoWebSockets), Download and run [test-Client.ino](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/test-Client.ino) then enjoy with basic Web Socket Communication.
