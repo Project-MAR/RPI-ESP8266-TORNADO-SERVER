@@ -19,4 +19,27 @@ Start with [Links2004 Project](https://github.com/Links2004/arduinoWebSockets), 
 
 ---
 
+#### Rename Rpi hostname and setup Bonjour
+
+First.
+```sh
+sudo nano /etc/hostname
+```
+This file contains one line, Hostname. Edit which you want then save it.
+
+Second.
+```sh
+sudo nano /etc/hosts
+```
+The second file also cantians the hostname but it's only use for some software. Find the line starting with 127.0.0.1 and change it
+
+Third.
+Setup Bonjour. This will allow you to access to RPi from hostname.local (adding .local after your hostname). RPi may have it installed already, but if not then.
+```sh
+sudo apt-get update
+sudo apt-get install libnss-mdns
+```
+
+---
+
 
