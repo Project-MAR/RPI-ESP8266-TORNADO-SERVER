@@ -25,10 +25,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.write_message('Hello from Server')
       
     def on_message(self, message):
-        print ('message received: %s' % message)
+        print ('message received:  %s' % message)
         # Reverse Message and send it back
-        print ('sending back message: %s' %  message)
-        self.write_message('echo-> ' + message)
+        print ('sending back message: %s' % message[::-1])
+        self.write_message(message[::-1])
  
     def on_close(self):
         print ('connection closed')
