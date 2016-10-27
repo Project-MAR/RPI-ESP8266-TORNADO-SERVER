@@ -19,7 +19,8 @@ Start waitng at port 9990
  <script>
 	
  	function Light1_toggle(){
- 		ws8880 = new WebSocket("ws://tornado-server.local:8880/web_ws");
+ 		//ws8880 = new WebSocket("ws://tornado-server.local:8880/web_ws");
+ 		ws8880 = new WebSocket("ws://localhost:8880/web_ws");
  		
  		ws8880.onopen = function(){
  			ws8880.send("This message come from port 8880");
@@ -28,10 +29,11 @@ Start waitng at port 9990
  	};
 
  	function waitAt9990(){
- 		ws9990 = new WebSocket("ws://tornado-server.local:9990/web_ws");
+ 		//ws9990 = new WebSocket("ws://tornado-server.local:9990/web_ws");
+ 		ws9990 = new WebSocket("ws://localhost:9990/web_ws");
  		
  		ws9990.onopen = function(){
- 			ws9990.send("Port 9990 is now opened")
+ 			ws9990.send("Port 9990 is now opened");
  		};
 
  		ws9990.onmessage = function (event){
