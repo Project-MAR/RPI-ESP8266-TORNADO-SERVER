@@ -42,4 +42,11 @@ sudo apt-get install libnss-mdns
 
 ---
 
+#### CAUTION: provisional headers are shown” in Chrome debugger
+On page load websocket works, but after that when applied with click event, then its not working     
+ - Type "chrome://net-internals" in the address bar and hit enter.
+ - Open the page that is showing problems.
+ - Go back to net-internals, click on events (###) and use the textfield to find the event related to your resource (use parts of the URL).
+Finally, click on the event and see if the info shown tells you something.   
 
+---
