@@ -3,19 +3,9 @@
 #include <ESP8266WiFiMulti.h>
 #include <WebSocketsClient.h>
 #include <Hash.h>
-#include <string.h>
-
-int LightStatus = 0;
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
-int count = 0;
-char Apple[30];
-char buffer [30];
-char nodeCMD[]= "wb.toggle.l.1";
-
-int relayA = 4;
-int relayB = 5;
 
 void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 
@@ -33,28 +23,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
             break;
         
         case WStype_TEXT:
-            if(strcmp((const char*)payload, nodeCMD) == 0){
-                Serial.printf("[WS] Receive: %s\n", payload);
-                
-                if(LightStatus){
-                  LightStatus = 0;
-                  Serial.printf("Light ON\n");
-                  digitalWrite(relayA, LOW);
-                  digitalWrite(relayB, HIGH);
-                  delay(500);
-                  digitalWrite(relayA, LOW);
-                  digitalWrite(relayB, LOW);
-   
-                }else{
-                  LightStatus = 1;
-                  Serial.printf("Light OFF\n");
-                  digitalWrite(relayA, HIGH);
-                  digitalWrite(relayB, LOW);
-                  delay(500);
-                  digitalWrite(relayA, LOW);
-                  digitalWrite(relayB, LOW);
-                }
-              }  
+            Serial.printf("[WS] Receive: %s\n", payload);
             break;
             
         case WStype_BIN:
@@ -67,6 +36,7 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 }
 
 void setup() {
+    // Serial.begin(921600);
     Serial.begin(115200);
 
     //Serial.setDebugOutput(true);
@@ -76,21 +46,14 @@ void setup() {
     Serial.println();
     Serial.println();
 
-    //IO Setup
-    pinMode(relayA, OUTPUT);
-    pinMode(relayB, OUTPUT);
-    digitalWrite(relayA, LOW);
-    digitalWrite(relayB, LOW);
-    delay(500);
-    
       for(uint8_t t = 4; t > 0; t--) {
           Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
           Serial.flush();
           delay(1000);
       }
 
-    WiFiMulti.addAP("MIND-WIFI", "87654321");
-    WiFiMulti.addAP("WifiNaam", "qawsEDRF");
+    WiFiMulti.addAP("SSID1", "PASS1");
+    WiFiMulti.addAP("SSID2", "PASS2");
 
     Serial.printf("Connecting Wifi...\n");
     
@@ -105,22 +68,13 @@ void setup() {
     Serial.println(WiFi.localIP());
     Serial.printf("\n");
 
-    //webSocket.beginSocketIO("192.168.1.12", 8880, "/ws");
-    webSocket.begin("192.168.1.12", 8880, "/ws");
+    //webSocket.beginSocketIO("158.108.166.160", 8880, "/ws");
+    webSocket.begin("158.108.166.160", 8880, "/ws");
     //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
     webSocket.onEvent(webSocketEvent);
 }
 
 void loop() {
     webSocket.loop();
-    //webSocket.begin("192.168.1.12", 8880, "/ws");
-
-    itoa(count,buffer,10);
-    strcat(Apple,"Apple: ");
-    strcat(Apple,buffer);
-    webSocket.sendTXT(Apple);
-    //webSocket.clientDisconnect();
-    count++;
-    strcpy(Apple,"");
-    //delay(2000);
+    delay(1000);
 }
