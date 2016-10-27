@@ -80,8 +80,8 @@ void setup() {
           delay(1000);
       }
 
-    WiFiMulti.addAP("MIND-WIFI", "87654321");
-    WiFiMulti.addAP("WifiNaam", "qawsEDRF");
+    WiFiMulti.addAP("SSID1", "PASS1");
+    WiFiMulti.addAP("SSID2", "PASS2");
 
     Serial.printf("Connecting Wifi...\n");
     
