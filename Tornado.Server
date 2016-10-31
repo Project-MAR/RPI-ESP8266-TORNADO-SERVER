@@ -1,0 +1,21 @@
+#!/bin/sh
+# /etc/init.d/Tornado.Server 
+
+case "$1" in
+  start)
+    echo "Starting Tornado Server"
+    # run application you want to start
+    /home/pi/Ram/Server.py
+    ;;
+  stop)
+    echo "Stopping Tornado Server"
+    # kill application you want to stop
+    pgrep Server.py | xargs kill
+    ;;
+  *)
+    echo "Usage: /etc/init.d/Tornado-Server {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
