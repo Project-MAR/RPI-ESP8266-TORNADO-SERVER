@@ -50,3 +50,24 @@ On page load websocket works, but after that when applied with click event, then
 Finally, click on the event and see if the info shown tells you something.   
 
 ---
+
+#### Make a Server run after startup
+
+put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d
+then run
+```sh
+sudo update-rc.d NameOfYourScript defaults
+```
+Test Tornado.Server service with this command
+```sh
+sudo /etc/init.d/Tornado.Server start
+```
+Or
+```sh
+sudo /etc/init.d/Tornado.Server stop
+
+```
+
+---
+
+
