@@ -56,7 +56,7 @@ Finally, click on the event and see if the info shown tells you something.
 put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d
 then run
 ```sh
-sudo update-rc.d NameOfYourScript defaults
+sudo update-rc.d Tornado.Server defaults
 ```
 Test Tornado.Server service with this command
 ```sh
@@ -67,7 +67,10 @@ Or
 sudo /etc/init.d/Tornado.Server stop
 
 ```
+IF you want to remove this service, just run.
+
+```sh
+sudo update-rc.d -f Tornado.Server remove
+```
 
 ---
-
-
