@@ -67,7 +67,7 @@ Or
 sudo /etc/init.d/Tornado.Server stop
 
 ```
-IF you want to remove this service, just run.
+If you want to remove this service, just run.
 
 ```sh
 sudo update-rc.d -f Tornado.Server remove
