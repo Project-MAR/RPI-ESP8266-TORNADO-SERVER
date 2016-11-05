@@ -5,7 +5,7 @@ case "$1" in
   start)
     echo "Starting Tornado Server"
     # run application you want to start
-    /home/pi/Ram/Server.py
+    /home/pi/Ram/RPI-ESP8266-TORNADO-SERVER/Server.py
     ;;
   stop)
     echo "Stopping Tornado Server"
