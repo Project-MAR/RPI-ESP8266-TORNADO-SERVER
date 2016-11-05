@@ -74,3 +74,12 @@ sudo update-rc.d -f Tornado.Server remove
 ```
 
 ---
+### BEGIN INIT INFO
+# Provides:          dovecot
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: dovecot
+# Description:       dovecot pop & imap daemon
+### END INIT INFO
