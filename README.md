@@ -72,8 +72,8 @@ If you want to remove this service, just run.
 ```sh
 sudo update-rc.d -f Tornado.Server remove
 ```
-
----
+note
+```sh
 ### BEGIN INIT INFO
 # Provides:          dovecot
 # Required-Start:    $local_fs $network
@@ -83,3 +83,6 @@ sudo update-rc.d -f Tornado.Server remove
 # Short-Description: dovecot
 # Description:       dovecot pop & imap daemon
 ### END INIT INFO
+
+service servicename status
+```
