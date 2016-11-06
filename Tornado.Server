@@ -1,6 +1,5 @@
 
 #!/bin/sh
-# /etc/init.d/Tornado.Server
 
 ### BEGIN INIT INFO
 # Provides:          Tornado.Server
