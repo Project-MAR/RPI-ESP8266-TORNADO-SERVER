@@ -1,5 +1,16 @@
+
 #!/bin/sh
-# /etc/init.d/Tornado.Server 
+# /etc/init.d/Tornado.Server
+
+### BEGIN INIT INFO
+# Provides:          Tornado.Server
+# Required-Start:    $local_fs $network
+# Required-Stop:     $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Tornado-Server
+# Description:       Start Tornado Server
+### END INIT INFO
 
 case "$1" in
   start)
