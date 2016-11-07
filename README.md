@@ -74,3 +74,7 @@ sudo update-rc.d -f Tornado.Server remove
 ```
 ---
 
+#### Resolve with Nameserver
+
+
+---
