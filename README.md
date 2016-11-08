@@ -74,7 +74,7 @@ sudo update-rc.d -f Tornado.Server remove
 ```
 ---
 
-#### Resolve with Nameserver
+#### Resolve with Nameserver (On working)
 mDNS ?   
 [CC3000 Multicast DNS](https://github.com/adafruit/CC3000_MDNS)   
 [esp8266.com](http://www.esp8266.com/viewtopic.php?f=8&t=4664)   
