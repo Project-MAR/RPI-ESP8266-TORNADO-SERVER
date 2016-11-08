@@ -75,8 +75,8 @@ sudo update-rc.d -f Tornado.Server remove
 ---
 
 #### Resolve with Nameserver (On working)
-with mDNS form mrdunk [esp8266_mdns](https://github.com/mrdunk/esp8266_mdns)
-clone and checkout at b58a8e3 for a test code that resolve tornado-server.local with mDNS 
+with mDNS form mrdunk [esp8266_mdns](https://github.com/mrdunk/esp8266_mdns)   
+clone and checkout at b58a8e3 for a test code that resolve tornado-server.local with mDNS   
 ```sh
 git checkout b58a8e3
 ```
