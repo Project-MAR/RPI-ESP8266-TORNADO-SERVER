@@ -75,6 +75,7 @@ sudo update-rc.d -f Tornado.Server remove
 ---
 
 #### Resolve with Nameserver
-
+mDNS ?
+[read](http://www.esp8266.com/viewtopic.php?f=8&t=4664)
 
 ---
