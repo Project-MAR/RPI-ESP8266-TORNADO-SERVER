@@ -76,7 +76,8 @@ sudo update-rc.d -f Tornado.Server remove
 
 #### Resolve with Nameserver
 mDNS ?
-[CC3000 Multicast DNS](https://github.com/adafruit/CC3000_MDNS)
-[esp8266.com](http://www.esp8266.com/viewtopic.php?f=8&t=4664)
+[CC3000 Multicast DNS](https://github.com/adafruit/CC3000_MDNS)   
+[esp8266.com](http://www.esp8266.com/viewtopic.php?f=8&t=4664)   
 [esp8266_mdns](https://github.com/mrdunk/esp8266_mdns)
+
 ---
