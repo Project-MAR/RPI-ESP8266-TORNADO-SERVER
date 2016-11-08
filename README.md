@@ -74,7 +74,7 @@ sudo update-rc.d -f Tornado.Server remove
 ```
 ---
 
-#### Resolve tornaso-server.local with mDNS for ESP8266
+#### Resolve tornado-server.local with mDNS for ESP8266
 with a help from mDNS library form [mrdunk](https://github.com/mrdunk/esp8266_mdns)   
 I modified and make nodeMCU to find tornado-server.local   
 Checkout at b58a8e3 for a test code that resolve tornado-server.local and get IP Address with mDNS   
