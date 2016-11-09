@@ -7,7 +7,8 @@
  <script type="text/javascript">
 
  	function Light1_toggle(){
- 		ws = new WebSocket("ws://tornado-server.local:80/web_ws");
+ 		//ws = new WebSocket("ws://tornado-server.local:80/web_ws");
+ 		ws = new WebSocket("wss://tornado-server.local:80/web_ws");
  		//ws = new WebSocket("ws://192.168.1.12:8880/ws");
 
  		ws.onopen = function(){

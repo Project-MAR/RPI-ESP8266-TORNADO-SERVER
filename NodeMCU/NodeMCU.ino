@@ -97,7 +97,8 @@ void setup() {
     Serial.printf("\n");
 
     //webSocket.begin("tornado-server.local/", 8880, "/web_ws");
-    webSocket.begin("192.168.1.90", 8880, "/web_ws");
+    //webSocket.begin("192.168.1.90", 8880, "/web_ws");
+    webSocket.beginSSL("192.168.1.90", 8880, "/web_ws");
     
     //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
     webSocket.onEvent(webSocketEvent);
