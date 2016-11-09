@@ -102,5 +102,7 @@ http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
         "keyfile" : "/var/tornado-server/keys/privateKey.key",
     })
 ```
+
 Copy certificate.crt to Computer and add this certificate into "Trusted Root Certificate"
+
 ---
