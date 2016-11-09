@@ -88,5 +88,18 @@ git checkout b58a8e3
 ---
 
 #### SSL Option
+Create certificate and privateKey   
+(For me, these files store in /var/tornado-server/keys/)   
+```sh
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout privateKey.key -out certificate.crt
+```
 
+Modified Tornado Server Object
+
+```python
+http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
+        "certfile": "/var/tornado-server/keys/certificate.crt",
+        "keyfile" : "/var/tornado-server/keys/privateKey.key",
+    })
+```
 ---
