@@ -103,6 +103,7 @@ http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
     })
 ```
 
-Copy certificate.crt to Computer and add this certificate into "Trusted Root Certificate"
+Copy certificate.crt to Computer and add this certificate into "Trusted Root Certificate"   
+This will cause current index.html and NodeMCU code broken because they use normal websocket (normal http request). Must be upgrade to secure websocket
 
 ---
