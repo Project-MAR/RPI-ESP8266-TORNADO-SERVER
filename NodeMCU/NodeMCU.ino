@@ -23,7 +23,7 @@ int switchState = ON;
 // Port Define
 int relayA = 4;
 int relayB = 5;
-int AC_Sense = 15;
+int AC_Sense = 12;
 
 int AC_Sense_readState = ON;
 
