@@ -83,10 +83,6 @@ git checkout b58a8e3
 ```
 ---
 
-#### 220Vac Readout
-
----
-
 #### SSL Option
 Create certificate and privateKey   
 (For me, these files store in /var/tornado-server/keys/)   
