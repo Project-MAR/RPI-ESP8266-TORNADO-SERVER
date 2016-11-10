@@ -107,3 +107,10 @@ Copy certificate.crt to Computer and add this certificate into "Trusted Root Cer
 This will cause current index.html and NodeMCU code broken because they use normal websocket (normal http request). Must be upgrade to secure websocket
 
 ---
+
+#### AC Sensor for detecting load status   
+SSL + AC_Sense + fix switch state.   
+Certificate problem, Only work with PC Browser.   
+```sh
+git checkout 10af5dd
+```
