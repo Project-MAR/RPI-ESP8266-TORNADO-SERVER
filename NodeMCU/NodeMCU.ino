@@ -26,8 +26,7 @@ int AC_Sense_readState = ON;
 
 void toggleLoad(int *LoadStatus) {
   int nextLoadStatus = ON;
-  
-  
+
   if(*LoadStatus == ON) {
     nextLoadStatus = OFF;
     Serial.printf("Try to OFF: 1\n");
@@ -41,16 +40,21 @@ void toggleLoad(int *LoadStatus) {
   delay(200);
   digitalWrite(relayA, LOW);
   digitalWrite(relayB, LOW);
-  delay(500);
-    
+  delay(200);
+
   AC_Sense_readState = digitalRead(AC_Sense);
   if(AC_Sense_readState != nextLoadStatus) {
+      if(*LoadStatus == ON)
+        Serial.printf("Try to OFF: 2\n");
+      else
+        Serial.printf("Try to ON: 2\n");
+    
     digitalWrite(relayA, LOW);
     digitalWrite(relayB, HIGH);
     delay(200);
     digitalWrite(relayA, LOW);
     digitalWrite(relayB, LOW);
-    delay(500);
+    delay(200);
   } 
 
   *LoadStatus = nextLoadStatus;
