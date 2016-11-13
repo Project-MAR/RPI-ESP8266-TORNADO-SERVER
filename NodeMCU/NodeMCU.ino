@@ -35,7 +35,7 @@ void toggleLoad(int *LoadStatus, int *switchState) {
           Serial.printf("Load OFF\n");
           digitalWrite(relayA, HIGH);
           digitalWrite(relayB, LOW);
-          delay(500);
+          delay(200);
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, LOW);
     } else {
@@ -44,7 +44,7 @@ void toggleLoad(int *LoadStatus, int *switchState) {
           Serial.printf("Load ON\n");
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, HIGH);
-          delay(500);
+          delay(200);
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, LOW);
     }
@@ -55,7 +55,7 @@ void toggleLoad(int *LoadStatus, int *switchState) {
           Serial.printf("Load OFF\n");
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, HIGH);
-          delay(500);
+          delay(200);
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, LOW);
       } else {
@@ -64,7 +64,7 @@ void toggleLoad(int *LoadStatus, int *switchState) {
           Serial.printf("Load ON\n");
           digitalWrite(relayA, HIGH);
           digitalWrite(relayB, LOW);
-          delay(500);
+          delay(200);
           digitalWrite(relayA, LOW);
           digitalWrite(relayB, LOW);
       }
@@ -128,7 +128,7 @@ void setup() {
       }
 
     WiFiMulti.addAP("WifiNaam", "qawsEDRF");
-    //WiFiMulti.addAP("MIND-WIFI", "PASS2");
+    WiFiMulti.addAP("MIND-WIFI", "87654321");
 
     Serial.printf("Connecting Wifi...\n");
     
