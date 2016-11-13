@@ -110,3 +110,7 @@ Certificate problem, Only work with PC Browser.
 ```sh
 git checkout 10af5dd
 ```
+AC Sense (ON->OFF) response too slow
+
+---
+
