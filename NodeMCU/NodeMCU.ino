@@ -101,40 +101,61 @@ void setup() {
     Serial.println();
     Serial.println();
 
-    //IO Setup
-    pinMode(relayA, OUTPUT);
-    pinMode(relayB, OUTPUT);
-    digitalWrite(relayA, LOW);
-    digitalWrite(relayB, LOW);
-
-    pinMode(AC_Sense, INPUT);
-    delay(500);
-
-    switchState = digitalRead(AC_Sense);
-    if(switchState) {
-      Serial.printf("switch state is now: A\n");
-      LoadStatus = ON;
-    }else {
-      Serial.printf("switch state is now: B\n");
-      LoadStatus = OFF;
-    }
-      
     for(uint8_t t = 4; t > 0; t--) {
       Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
       Serial.flush();
       delay(1000);
     }
+    Serial.println();
 
-    // Init Switch State
-    AC_Sense_readState = digitalRead(AC_Sense);
-    toggleLoad(&LoadStatus, &switchState);
-    toggleLoad(&LoadStatus, &switchState);
-    toggleLoad(&LoadStatus, &switchState);
-    toggleLoad(&LoadStatus, &switchState);
+    //IO Setup
+    pinMode(AC_Sense, INPUT);
     delay(200);
-    if(AC_Sense_readState != digitalRead(AC_Sense))
-      toggleLoad(&LoadStatus, &switchState);
+    AC_Sense_readState = digitalRead(AC_Sense);
     
+    pinMode(relayA, OUTPUT);
+    pinMode(relayB, OUTPUT);
+    digitalWrite(relayA, LOW);
+    digitalWrite(relayB, LOW);
+    delay(500);
+    
+    // Init Switch and Relay State 
+    Serial.printf("Init Switch and Relay State\n");
+    LoadStatus = AC_Sense_readState;
+    if(LoadStatus == ON) {
+      Serial.printf("init: Load is ON\n");
+      LoadStatus = ON;
+    }else {
+       Serial.printf("init: Load is OFF\n");
+      LoadStatus = OFF;
+    }
+
+    digitalWrite(relayA, HIGH);
+    digitalWrite(relayB, LOW);
+    delay(200);
+    digitalWrite(relayA, LOW);
+    digitalWrite(relayB, LOW);
+    delay(500);
+    
+    if(digitalRead(AC_Sense) == ON) {
+      switchState = STATE_B;
+      Serial.printf("init switch state: B\n");
+    }
+    else {
+      switchState = STATE_A;
+      Serial.printf("init switch state: A\n");
+    }
+
+    if(AC_Sense_readState != digitalRead(AC_Sense)) {
+      digitalWrite(relayA, LOW);
+      digitalWrite(relayB, HIGH);
+      delay(200);
+      digitalWrite(relayA, LOW);
+      digitalWrite(relayB, LOW);
+      delay(200);
+    }
+
+    Serial.printf("\n");
     WiFiMulti.addAP("WifiNaam", "qawsEDRF");
     WiFiMulti.addAP("MIND-WIFI", "87654321");
 
@@ -145,11 +166,9 @@ void setup() {
         delay(100);
     }
     
-    Serial.printf("\n");
     Serial.printf("WiFi connected\n");
     Serial.printf("IP address: ");
     Serial.println(WiFi.localIP());
-    Serial.printf("\n");
 
     //webSocket.begin("tornado-server.local/", 8880, "/web_ws");
     //webSocket.begin("192.168.1.90", 8880, "/web_ws");
@@ -157,6 +176,7 @@ void setup() {
     
     //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
     webSocket.onEvent(webSocketEvent); 
+    Serial.printf("\n");
 }
 
 void loop() {
