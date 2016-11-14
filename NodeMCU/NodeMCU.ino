@@ -12,8 +12,6 @@ WebSocketsClient webSocket;
 #define OFF     LOW
 #define STATE_A HIGH
 #define STATE_B LOW
-#define TRUE    HIGH
-#define FALSE   LOW
 
 int LoadStatus = ON;
 char nodeCMD[]= "wb.toggle.l.1";
@@ -114,19 +112,29 @@ void setup() {
 
     switchState = digitalRead(AC_Sense);
     if(switchState) {
-        Serial.printf("switch state is now: A\n");
-        LoadStatus = ON;
+      Serial.printf("switch state is now: A\n");
+      LoadStatus = ON;
     }else {
-        Serial.printf("switch state is now: B\n");
-        LoadStatus = OFF;
+      Serial.printf("switch state is now: B\n");
+      LoadStatus = OFF;
     }
       
-      for(uint8_t t = 4; t > 0; t--) {
-          Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
-          Serial.flush();
-          delay(1000);
-      }
+    for(uint8_t t = 4; t > 0; t--) {
+      Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
+      Serial.flush();
+      delay(1000);
+    }
 
+    // Init Switch State
+    AC_Sense_readState = digitalRead(AC_Sense);
+    toggleLoad(&LoadStatus, &switchState);
+    toggleLoad(&LoadStatus, &switchState);
+    toggleLoad(&LoadStatus, &switchState);
+    toggleLoad(&LoadStatus, &switchState);
+    delay(200);
+    if(AC_Sense_readState != digitalRead(AC_Sense))
+      toggleLoad(&LoadStatus, &switchState);
+    
     WiFiMulti.addAP("WifiNaam", "qawsEDRF");
     WiFiMulti.addAP("MIND-WIFI", "87654321");
 
@@ -160,10 +168,10 @@ void loop() {
       // toggle switch state
       if(switchState == STATE_A) {
         switchState = STATE_B;
-        Serial.printf("switch state is now: B\n");
+        Serial.printf("switch is now: B\n");
       }else {
         switchState = STATE_A;
-        Serial.printf("switch state is now: A\n");
+        Serial.printf("switch is now: A\n");
       }      
           
       LoadStatus = AC_Sense_readState;
