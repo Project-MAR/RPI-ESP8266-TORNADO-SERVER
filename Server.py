@@ -67,13 +67,14 @@ if __name__ == "__main__":
     #sockets = tornado.netutil.bind_sockets(8880)
     #tornado.process.fork_processes(0)
     
-    #http_server = tornado.httpserver.HTTPServer(WebApp)
+    http_server = tornado.httpserver.HTTPServer(WebApp)
     
+    '''
     http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
         "certfile": "/var/tornado-server/keys/certificate.crt",
         "keyfile" : "/var/tornado-server/keys/privateKey.key",
     })
-    
+    '''
 
     #http_server.add_sockets(sockets)
     #http_server.listen(80)
