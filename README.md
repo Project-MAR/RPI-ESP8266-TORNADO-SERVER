@@ -53,7 +53,7 @@ Finally, click on the event and see if the info shown tells you something.
 
 #### Make a Server run after startup
 
-put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d
+put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d[]*(0
 then run
 ```sh
 sudo update-rc.d Tornado.Server defaults
@@ -100,13 +100,19 @@ http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
 ```
 
 Copy certificate.crt to Computer and add this certificate into "Trusted Root Certificate"   
-This will cause current index.html and NodeMCU code broken because they use normal websocket (normal http request). Must be upgrade to secure websocket
-
+Then Upgrade webpage and NodeMCU to wss.   
+   
+##### Problem with mobile device
+Can't access https because browser don't truse the certificate.   
+Read this   
+   - [.local Server Certificate](https://www.w3.org/wiki/images/3/37/2016.w3c.breakout_session.dot-local-server-cert.p.pdf)
+   - [SSL/TLS Certificates for Internal Servers](https://www.globalsign.com/en/blog/certificates-for-internal-servers/)
+   - [HTTPS Certificate for internal use](http://stackoverflow.com/questions/616055/https-certificate-for-internal-use)
+   - [SECURING YOUR ESP8266 SETUP](http://www.esp8266.com/viewtopic.php?f=6&t=2439)
 ---
 
 #### AC Sensor for detecting load status   
 SSL + AC_Sense + fix switch state.   
-Certificate problem, Only work with PC Browser.   
 ```sh
 git checkout 10af5dd
 ```
