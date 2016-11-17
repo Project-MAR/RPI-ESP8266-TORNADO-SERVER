@@ -117,7 +117,7 @@ SSL + AC_Sense + fix switch state.
 ```sh
 git checkout 10af5dd
 ```
-AC Sense (ON->OFF) response too slow
+Note: AC Sense (ON->OFF) response too slow because of RC constant. No problem but cause debug message prints wrong switch stat message during turn OFF a load.
 
 ---
 
