@@ -103,13 +103,14 @@ Copy certificate.crt to Computer and add this certificate into "Trusted Root Cer
 Then Upgrade webpage and NodeMCU to wss.   
    
 ##### Problem with mobile device
-Can't access https because browser don't truse the certificate.   
+If https, Can't access https because browser don't truse the certificate.   
 Read this   
    - [.local Server Certificate](https://www.w3.org/wiki/images/3/37/2016.w3c.breakout_session.dot-local-server-cert.p.pdf)
    - [SSL/TLS Certificates for Internal Servers](https://www.globalsign.com/en/blog/certificates-for-internal-servers/)
    - [HTTPS Certificate for internal use](http://stackoverflow.com/questions/616055/https-certificate-for-internal-use)
    - [SECURING YOUR ESP8266 SETUP](http://www.esp8266.com/viewtopic.php?f=6&t=2439)
 
+If http with web WebSocket, Although WebSocket protocol has been standardized by the IETF as RFC 6455, it doesn't support in Android Browser.
 ---
 
 #### AC Sensor for detecting load status   
