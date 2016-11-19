@@ -111,6 +111,7 @@ Read this
    - [SECURING YOUR ESP8266 SETUP](http://www.esp8266.com/viewtopic.php?f=6&t=2439)
 
 If http with web WebSocket, Although WebSocket protocol has been standardized by the IETF as RFC 6455, it doesn't support in Android Browser.
+
 ---
 
 #### AC Sensor for detecting load status   
