@@ -156,8 +156,8 @@ void setup() {
     }
 
     Serial.printf("\n");
-    WiFiMulti.addAP("WifiNaam", "qawsEDRF");
-    WiFiMulti.addAP("MIND-WIFI", "87654321");
+    WiFiMulti.addAP("YOUR-AP-NAME-1", "YOUR-PASSWPRD-1");
+    WiFiMulti.addAP("YOUR-AP-NAME-2", "YOUR-PASSWPRD-2");     // In case of more than 1 AP is available
 
     Serial.printf("Connecting Wifi...\n");
     
