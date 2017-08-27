@@ -1,7 +1,13 @@
 # RPI-ESP8266-TORNADO-SERVER
-
+   
 #### This project aim to setup Tornado Web Server in Rpi and create a Web Socket Client with NodeMCU.
 ---
+
+#### System Overview
+<img src="https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/img/systemOverview.png" width="600">
+
+This Project try to build a Personal Local Server for IoT Project. Fornow, most of IoT solution use public server(free or paid). Trust if network is down, you lost all control for your IoT devices. The local IoT server Act as a center of the communication between user (web brownser) and the IoT Device(Node with control the light bulb). User can control the bulb from a traditional switch or a web brownser. Because there are two source of signals to control the IoT Device, so a NodeMCU will handle a state change (on/off) of the light bulb according to the incomming event. A Demo is avalable in [YouTube.](https://www.youtube.com/watch?v=OhDF2fYqwgc)
+
 
 #### Tornado Webserver Setup on Raspberry
 
