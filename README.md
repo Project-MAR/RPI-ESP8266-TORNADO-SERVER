@@ -59,7 +59,7 @@ Finally, click on the event and see if the info shown tells you something.
 
 #### Make a Server run after startup
 
-put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d[]*(0
+put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d 
 then run
 ```sh
 sudo update-rc.d Tornado.Server defaults
