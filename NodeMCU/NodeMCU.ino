@@ -4,6 +4,7 @@
 #include <WebSocketsClient.h>
 #include <Hash.h>
 #include <string.h>
+#include "PasswordList.h"
 
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
@@ -12,6 +13,10 @@ WebSocketsClient webSocket;
 #define OFF     LOW
 #define STATE_A HIGH
 #define STATE_B LOW
+
+char SocketServer[] = "192.168.1.24";
+char SocketURL[]    = "/web_ws";
+int  SocketPort     = 8880;
 
 int LoadStatus = ON;
 char nodeCMD[]= "wb.toggle.l.1";
@@ -156,8 +161,10 @@ void setup() {
     }
 
     Serial.printf("\n");
-    WiFiMulti.addAP("YOUR-AP-NAME-1", "YOUR-PASSWPRD-1");
-    WiFiMulti.addAP("YOUR-AP-NAME-2", "YOUR-PASSWPRD-2");     // In case of more than 1 AP is available
+    for(int i = 0; i < numPassWordList; i++)
+    {
+         WiFiMulti.addAP(APName[i], APPassword[i]); 
+    }
 
     Serial.printf("Connecting Wifi...\n");
     
@@ -170,8 +177,9 @@ void setup() {
     Serial.printf("IP address: ");
     Serial.println(WiFi.localIP());
 
+    Serial.printf("Connect to Web Socket Server IP: %s:%d%s\n",SocketServer, SocketPort, SocketURL);
     //webSocket.begin("tornado-server.local/", 8880, "/web_ws");
-    webSocket.begin("192.168.1.90", 8880, "/web_ws");
+    webSocket.begin(SocketServer, SocketPort, SocketURL);
     //webSocket.beginSSL("192.168.1.90", 8880, "/web_ws");
     
     //webSocket.setAuthorization("user", "Password"); // HTTP Basic Authorization
