@@ -1,7 +1,13 @@
 # RPI-ESP8266-TORNADO-SERVER
-
+   
 #### This project aim to setup Tornado Web Server in Rpi and create a Web Socket Client with NodeMCU.
 ---
+
+#### System Overview
+<img src="https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/img/systemOverview.png" width="600">
+
+This Project try to build a Personal Local Server for IoT Project. Fornow, most of IoT solution use public server(free or paid). Trust if network is down, you lost all control for your IoT devices. The local IoT server Act as a center of the communication between user (web brownser) and the IoT Device(Node with control the light bulb). User can control the bulb from a traditional switch or a web brownser. Because there are two source of signals to control the IoT Device, so a NodeMCU will handle a state change (on/off) of the light bulb according to the incomming event. A Demo is avalable in [YouTube.](https://www.youtube.com/watch?v=OhDF2fYqwgc)
+
 
 #### Tornado Webserver Setup on Raspberry
 
@@ -53,7 +59,7 @@ Finally, click on the event and see if the info shown tells you something.
 
 #### Make a Server run after startup
 
-put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d
+put [Tornado.Server](https://github.com/Project-MAR/RPI-ESP8266-TORNADO-SERVER/blob/master/Tornado.Server) in /etc/init.d[]*(0
 then run
 ```sh
 sudo update-rc.d Tornado.Server defaults
@@ -100,17 +106,26 @@ http_server = tornado.httpserver.HTTPServer(WebApp, ssl_options={
 ```
 
 Copy certificate.crt to Computer and add this certificate into "Trusted Root Certificate"   
-This will cause current index.html and NodeMCU code broken because they use normal websocket (normal http request). Must be upgrade to secure websocket
+Then Upgrade webpage and NodeMCU to wss.   
+   
+##### Problem with mobile device
+If https, Can't access https because browser don't truse the certificate.   
+Read this   
+   - [.local Server Certificate](https://www.w3.org/wiki/images/3/37/2016.w3c.breakout_session.dot-local-server-cert.p.pdf)
+   - [SSL/TLS Certificates for Internal Servers](https://www.globalsign.com/en/blog/certificates-for-internal-servers/)
+   - [HTTPS Certificate for internal use](http://stackoverflow.com/questions/616055/https-certificate-for-internal-use)
+   - [SECURING YOUR ESP8266 SETUP](http://www.esp8266.com/viewtopic.php?f=6&t=2439)
+
+If http with web WebSocket, Although WebSocket protocol has been standardized by the IETF as RFC 6455, it doesn't support in Android Browser.
 
 ---
 
 #### AC Sensor for detecting load status   
 SSL + AC_Sense + fix switch state.   
-Certificate problem, Only work with PC Browser.   
 ```sh
 git checkout 10af5dd
 ```
-AC Sense (ON->OFF) response too slow
+Note: AC Sense (ON->OFF) response too slow because of RC constant. No problem but cause an effect like a bouncing from mechanical switch
 
 ---
 
