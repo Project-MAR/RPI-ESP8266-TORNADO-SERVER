@@ -9,86 +9,103 @@
 ESP8266WiFiMulti WiFiMulti;
 WebSocketsClient webSocket;
 
+#define Relay_ON    1
+#define Relay_OFF   0
+
+#define Switch_ON   0
+#define Switch_OFF  1
+
 #define ON      HIGH
 #define OFF     LOW
-#define STATE_A HIGH
-#define STATE_B LOW
+
+int LoadStatus  = ON;
+int switchState = ON;
 
 char SocketServer[] = "192.168.1.24";
 char SocketURL[]    = "/web_ws";
 int  SocketPort     = 8880;
+char nodeCMD[]      = "wb.toggle.l.1";
 
-int LoadStatus = ON;
-char nodeCMD[]= "wb.toggle.l.1";
+/* ---------- IO Define ----------------*/
+const int LED1_PIN = 5;
+const int LED2_PIN = 4;
+const int LED3_PIN = 0;
 
-int switchState = ON;
+const int RelayA_PIN = 2;
+const int RelayC_PIN = 14;
 
-// Port Define
-int relayA = 4;
-int relayB = 5;
-int AC_Sense = 12;
+const int Switch_PIN = 10;
+/*---------------------------------------*/
 
-int AC_Sense_readState = ON;
+int RelayStatus = 0;
 
-void toggleLoad(int *LoadStatus, int *switchState) {
-  if(*switchState == STATE_A) {
-      if(*LoadStatus == ON) {
-          *LoadStatus = OFF;
-          Serial.printf("CASE: 1\n");
-          Serial.printf("Load OFF\n");
-          digitalWrite(relayA, HIGH);
-          digitalWrite(relayB, LOW);
-          delay(200);
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, LOW);
-    } else {
-          *LoadStatus = ON;
-          Serial.printf("CASE: 2\n");
-          Serial.printf("Load ON\n");
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, HIGH);
-          delay(200);
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, LOW);
-    }
-  }else {
-      if(*LoadStatus == ON) {
-          *LoadStatus = OFF;
-          Serial.printf("CASE: 3\n");
-          Serial.printf("Load OFF\n");
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, HIGH);
-          delay(200);
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, LOW);
-      } else {
-          *LoadStatus = ON;
-          Serial.printf("CASE: 4\n");
-          Serial.printf("Load ON\n");
-          digitalWrite(relayA, HIGH);
-          digitalWrite(relayB, LOW);
-          delay(200);
-          digitalWrite(relayA, LOW);
-          digitalWrite(relayB, LOW);
-      }
-  }
+int lastSwitchState    = 0;
+int currentSwitchState = 0;
+
+void turnON()
+{
+  digitalWrite(RelayA_PIN, HIGH);
+  digitalWrite(RelayC_PIN, LOW);
+  delay(50);
+  digitalWrite(RelayA_PIN, LOW);
+  digitalWrite(RelayC_PIN, LOW);
+  
+  //digitalWrite(LED3_PIN, LOW);
+  digitalWrite(LED2_PIN, LOW);
+  RelayStatus = Relay_ON;
+  //Blynk.virtualWrite(V0, HIGH);
 }
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
+void turnOFF()
+{
+  digitalWrite(RelayA_PIN, LOW);
+  digitalWrite(RelayC_PIN, HIGH);
+  delay(50);
+  digitalWrite(RelayA_PIN, LOW);
+  digitalWrite(RelayC_PIN, LOW);
+  
+  //digitalWrite(LED3_PIN, HIGH);
+  digitalWrite(LED2_PIN, HIGH);
+  RelayStatus = Relay_OFF;
+  //Blynk.virtualWrite(V0, LOW);
+}
 
-    switch(type) {
+void togglRelay()
+{
+  if(RelayStatus == Relay_ON)
+  {
+    turnOFF();
+    //Blynk.virtualWrite(V0, LOW);
+    Serial.println(">>> Relay: OFF");    
+  }
+  else
+  {
+    turnON();
+    //Blynk.virtualWrite(V0, HIGH);
+    Serial.println(">>> Relay: ON");    
+  }
+  Serial.println("");
+}
+
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) 
+{
+    //digitalWrite(LED3_PIN, HIGH);
+    switch(type) 
+    {
         case WStype_DISCONNECTED:
             Serial.printf("Disconnected from web Socket\n");
+            digitalWrite(LED3_PIN, HIGH);
             break;
             
         case WStype_CONNECTED:
             Serial.printf("[WSc] Connected to Web Socket\n");
+            digitalWrite(LED3_PIN, LOW);
             break;
         
         case WStype_TEXT:
             if(strcmp((const char*)payload, nodeCMD) == 0){
-                Serial.printf("\n[WS] Receive: %s\n", payload);
-                toggleLoad(&LoadStatus, &switchState);
+                Serial.printf("[WS] Receive: %s\n", payload);
+                togglRelay();
               }
             break;
             
@@ -100,67 +117,48 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t lenght) {
 }
 
 void setup() {
+
     Serial.begin(115200);
     Serial.setDebugOutput(true);
     Serial.println();
     Serial.println();
     Serial.println();
 
-    for(uint8_t t = 4; t > 0; t--) {
+    //IO Setup
+    pinMode(RelayA_PIN, OUTPUT);
+    pinMode(RelayC_PIN, OUTPUT);
+    pinMode(LED1_PIN, OUTPUT);
+    pinMode(LED2_PIN, OUTPUT);
+    pinMode(LED3_PIN, OUTPUT);
+    digitalWrite(LED3_PIN, HIGH);
+
+    pinMode(Switch_PIN, INPUT);
+    currentSwitchState = digitalRead(Switch_PIN);
+    lastSwitchState = currentSwitchState;
+
+    Serial.println();
+    if(lastSwitchState == Switch_ON)
+    {
+      Serial.println("\n>>>Init: Switch is at ON\n");
+      RelayStatus = Relay_ON;
+      turnON();
+    }
+    else
+    {
+      Serial.println("\n>>>Init: Switch is at OFF\n");
+      RelayStatus = Relay_OFF;
+      turnOFF();
+    }  
+
+    for(uint8_t t = 4; t > 0; t--) 
+    {
       Serial.printf("[SETUP] BOOT WAIT %d...\n", t);
       Serial.flush();
       delay(1000);
     }
     Serial.println();
 
-    //IO Setup
-    pinMode(AC_Sense, INPUT);
-    delay(200);
-    AC_Sense_readState = digitalRead(AC_Sense);
-    
-    pinMode(relayA, OUTPUT);
-    pinMode(relayB, OUTPUT);
-    digitalWrite(relayA, LOW);
-    digitalWrite(relayB, LOW);
-    delay(500);
-    
-    // Init Switch and Relay State 
-    Serial.printf("Init Switch and Relay State\n");
-    LoadStatus = AC_Sense_readState;
-    if(LoadStatus == ON) {
-      Serial.printf("init: Load is ON\n");
-      LoadStatus = ON;
-    }else {
-       Serial.printf("init: Load is OFF\n");
-      LoadStatus = OFF;
-    }
-
-    digitalWrite(relayA, HIGH);
-    digitalWrite(relayB, LOW);
-    delay(200);
-    digitalWrite(relayA, LOW);
-    digitalWrite(relayB, LOW);
-    delay(500);
-    
-    if(digitalRead(AC_Sense) == ON) {
-      switchState = STATE_B;
-      Serial.printf("init switch state: B\n");
-    }
-    else {
-      switchState = STATE_A;
-      Serial.printf("init switch state: A\n");
-    }
-
-    if(AC_Sense_readState != digitalRead(AC_Sense)) {
-      digitalWrite(relayA, LOW);
-      digitalWrite(relayB, HIGH);
-      delay(200);
-      digitalWrite(relayA, LOW);
-      digitalWrite(relayB, LOW);
-      delay(200);
-    }
-
-    Serial.printf("\n");
+    //Serial.printf("\n");
     for(int i = 0; i < numPassWordList; i++)
     {
          WiFiMulti.addAP(APName[i], APPassword[i]); 
@@ -168,7 +166,8 @@ void setup() {
 
     Serial.printf("Connecting Wifi...\n");
     
-    while(WiFiMulti.run() != WL_CONNECTED) {
+    while(WiFiMulti.run() != WL_CONNECTED) 
+    {
         Serial.printf(".");
         delay(100);
     }
@@ -187,26 +186,60 @@ void setup() {
     Serial.printf("\n");
 }
 
-void loop() {
+unsigned int count = 0;
+unsigned char normalState = 0;
+
+void BlinkNormalStatus(){  
+  count++;
+  if(count >= 60000)
+  {
+     count = 0;
+     if(normalState == 1)
+     {
+        normalState = 0;
+        digitalWrite(LED1_PIN, LOW);   
+     }
+     else
+     {
+        normalState = 1;
+        digitalWrite(LED1_PIN, HIGH);
+     } 
+
+     if(webSocket.sendPing())
+    {
+      Serial.printf("Socket is normal\n");
+    }
+    else
+    {
+      digitalWrite(LED3_PIN, HIGH);
+      Serial.printf("Socket Disappear!!!\n");
+    } 
+  }
+}
+
+void loop() 
+{
     // Web Socket loop
     webSocket.loop();
-
-    AC_Sense_readState = digitalRead(AC_Sense);
-    if((AC_Sense_readState != LoadStatus)) {
-      // toggle switch state
-      if(switchState == STATE_A) {
-        switchState = STATE_B;
-        Serial.printf("switch is now: B\n");
-      }else {
-        switchState = STATE_A;
-        Serial.printf("switch is now: A\n");
-      }      
-          
-      LoadStatus = AC_Sense_readState;
-      if(LoadStatus)
-        Serial.printf("Load ON\n");
+    BlinkNormalStatus();
+    //digitalWrite(LED3_PIN, LOW);
+    
+    currentSwitchState = digitalRead(Switch_PIN);
+    if (currentSwitchState != lastSwitchState)
+    {
+      if (currentSwitchState == Switch_ON)
+      {
+         Serial.println("[Manual Event] : Switch is ON");
+         //turnON();
+      }
       else
-        Serial.printf("Load OFF\n");
-   }
+      {
+         Serial.println("[Manual Event] : Switch is OFF");
+         //turnOFF();
+      }
+      lastSwitchState = currentSwitchState;
+      togglRelay();
+    }
+
 }
 
